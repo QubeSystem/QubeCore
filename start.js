@@ -2,14 +2,6 @@ process.on('uncaughtException', function(err) {
     console.error('ERROR!!!!!!!', err, err.stack);
 });
 
-process.on('exit', function(code) {
-    console.log('process exit with code ' + code);
-    require('child_process').spawn('node', ['exit'], {
-        detached : true,
-        stdio : 'ignore'
-    });
-});
-
 var server = require('./server');
 var client = require('./router/client');
 
@@ -31,6 +23,17 @@ var async = require('async');
 var data = require('./platform/data');
 var worker = require('./router/worker');
 var setting = require('./setting');
+var fs = require('fs');
+
+process.on('exit', function(code) {
+    console.log('process exit with code ' + code);
+    console.log('saving memory data');
+    fs.writeFileSync('./save.json', JSON.stringify(data.getAll()), {encoding:'utf8'});
+    require('child_process').spawn('node', ['exit'], {
+        detached : true,
+        stdio : 'ignore'
+    });
+});
 
 var shutdown = exports.shutdown = false;
 

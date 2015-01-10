@@ -19,3 +19,11 @@ exports.load = function(key, callback) {
 exports.save = function(key, callback) {
 
 }
+
+exports.getAll = function() {
+    return db;
+}
+
+exports.setAll = function(newDb) {
+    db = newDb;
+}
