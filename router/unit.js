@@ -104,9 +104,13 @@ Router.prototype.addUnit = function addUnit(connection, onDisconnect) {
     function action() {
         self.units.push(unit);
         if (self.list.length > 0) {
-            self.order();
+            while (self.units.length > 0 && self.list.length > 0) {
+                self.order();
+            }
         } else if (self.working.length > 0) {
-            self.answer();
+            while (self.units.length > 0 && self.working.length > 0) {
+                self.answer();
+            }
         } else if (self.done.length >= self.tasks.length) {
             self.callback();
         }
