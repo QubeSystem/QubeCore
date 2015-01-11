@@ -120,17 +120,14 @@ Router.prototype.addUnit = function addUnit(connection, onDisconnect) {
             key.setUsed(i, false);
             data.set(i, msg.data[i]);
         }
-        if (msg.event)
-        for (var i in msg.event) {
-            addEvent(msg.event[i]);
+        if (msg.event) {
+            msg.event.forEach(addEvent)
         }
-        if (msg.load)
-        for (var i in msg.load) {
-            addDataToLoad(msg.load[i]);
+        if (msg.load) {
+            msg.load.forEach(addDataToLoad)
         }
-        if (msg.save)
-        for (var i in msg.save) {
-            addDataToSave(msg.save[i]);
+        if (msg.save) {
+            msg.save.forEach(addDataToSave);
         }
         action();
     });
